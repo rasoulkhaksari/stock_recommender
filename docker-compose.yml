@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  db:
+    container_name: stock_recommender_db
+    image: postgres:9.6-alpine
+    networks:
+      - new 
+    environment:
+      POSTGRES_PASSWORD: 1234566
+    ports:
+      - 5432:5432
+
+  recommender:
+    image: stockrecommender
+    container_name: stock_recommender
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - db
+    networks:
+      - new 
+
+networks:
+  new: 
